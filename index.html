@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SBA – Castellum</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .logo {
+        text-align: center;
+        margin-top: 25px;
+        margin-bottom: 10px;
+    }
+
+    .logo img {
+        max-width: 200px;
+        height: auto;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 25px;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .input-box {
+        margin: 15px 0;
+    }
+
+    input {
+        width: 100%;
+        padding: 14px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 18px;
+    }
+
+    .button {
+        padding: 10px 18px;
+        background: #0078d7;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        transition: 0.2s ease;
+    }
+
+    .button:hover {
+        background: #005fa3;
+        transform: translateY(-2px);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* KARTVYN EFTER INLOGGNING */
+    .map-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 1500px;
+        height: 100vh; /* hela skärmen */
+        margin: 0 auto;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        background-image: url("boras.png");
+        background-size: cover;
+        background-position: center;
+    }
+
+    .map-label {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        min-width: 110px;
+        text-align: center;
+    }
+
+    .map-label .button {
+        padding: 8px 10px;
+        font-size: 14px;
+        border-radius: 10px;
+        background: rgba(0, 56, 104, 0.9); /* mörkare blå, bättre mot kartan */
+    }
+
+    /* FASTIGHETSVY (EFTER KLICK PÅ KNAPP PÅ KARTAN) */
+    .property-buttons {
+        margin-top: 20px;
+    }
+
+    .property-buttons .button {
+        width: 100%;
+        padding: 18px;
+        margin: 10px 0;
+        font-size: 18px;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LOGO + RUBRIK (visas alltid) -->
+    <div class="logo">
+        <img src="Castellum.png" alt="Castellum">
+    </div>
+    <h2>Systematiskt Brandskyddsarbete</h2>
+
+    <!-- 1. INLOGGNING -->
+    <div id="login-section">
+        <div class="input-box">
+            <input id="username" type="text" placeholder="Användarnamn">
+        </div>
+        <div class="input-box">
+            <input id="password" type="password" placeholder="Lösenord">
+        </div>
+        <button class="button" onclick="login()">Logga in</button>
+    </div>
+
+    <!-- 2. KARTÖVERSIKT (visas efter inloggning) -->
+    <div id="map-section" class="hidden">
+        <p style="text-align:center; margin-bottom:10px; color:#333;">
+            Klicka på en fastighet i kartan för att öppna SBA-översikten.
+        </p>
+
+        <div class="map-wrapper">
+            <!-- Här placerar du fastigheterna “på rätt plats” med top/left -->
+            <!-- OBS: Justera procenten tills de matchar din karta -->
+
+            <div class="map-label" style="top: 35%; left: 40%;">
+                <button class="button" onclick="openProperty('Ekholma 7')">Ekholma 7</button>
+            </div>
+
+            <div class="map-label" style="top: 45%; left: 45%;">
+                <button class="button" onclick="openProperty('Milen 7')">Milen 7</button>
+            </div>
+
+            <div class="map-label" style="top: 47%; left: 52%;">
+                <button class="button" onclick="openProperty('Osdal 3:2')">Osdal 3:2</button>
+            </div>
+
+            <div class="map-label" style="top: 50%; left: 50%;">
+                <button class="button" onclick="openProperty('Kompaniet 2')">Kompaniet 2</button>
+            </div>
+
+            <div class="map-label" style="top: 52%; left: 48%;">
+                <button class="button" onclick="openProperty('Spindeln 12')">Spindeln 12</button>
+            </div>
+
+            <div class="map-label" style="top: 60%; left: 50%;">
+                <button class="button" onclick="openProperty('Nestor 2')">Nestor 2</button>
+            </div>
+
+            <div class="map-label" style="top: 63%; left: 52%;">
+                <button class="button" onclick="openProperty('Nestor 3')">Nestor 3</button>
+            </div>
+
+            <div class="map-label" style="top: 70%; left: 30%;">
+                <button class="button" onclick="openProperty('Laxöringen 1')">Laxöringen 1</button>
+            </div>
+
+            <div class="map-label" style="top: 65%; left: 65%;">
+                <button class="button" onclick="openProperty('Lagern 8')">Lagern 8</button>
+            </div>
+
+            <div class="map-label" style="top: 25%; left: 25%;">
+                <button class="button" onclick="openProperty('Kyllared 1:112')">Kyllared 1:112</button>
+            </div>
+
+            <div class="map-label" style="top: 20%; left: 60%;">
+                <button class="button" onclick="openProperty('Silverpoppeln 31')">Silverpoppeln 31</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 3. FASTIGHETSVY (efter klick på kartan) -->
+    <div id="property-view" class="hidden">
+        <h2 id="property-title"></h2>
+
+        <div class="property-buttons">
+            <button class="button" onclick="alert('Checklistor kommer i nästa steg')">Grundläggande SBA</button>
+            <button class="button" onclick="alert('Checklistor kommer i nästa steg')">Utrymningskontroll</button>
+            <button class="button" onclick="alert('Checklistor kommer i nästa steg')">Brandteknisk kontroll</button>
+            <button class="button" onclick="backToMap()">Tillbaka till karta</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function login() {
+    const user = document.getElementById("username").value;
+
+    if (user.trim() === "") {
+        alert("Fyll i användarnamn");
+        return;
+    }
+
+    localStorage.setItem("sbaUser", user);
+
+    // Visa kartan, göm inloggningen
+    document.getElementById("login-section").classList.add("hidden");
+    document.getElementById("map-section").classList.remove("hidden");
+    document.getElementById("property-view").classList.add("hidden");
+}
+
+function openProperty(name) {
+    document.getElementById("property-title").textContent = name;
+
+    // Visa fastighetens vy, göm kartan
+    document.getElementById("map-section").classList.add("hidden");
+    document.getElementById("property-view").classList.remove("hidden");
+}
+
+function backToMap() {
+    // Tillbaka till kartöversikten
+    document.getElementById("property-view").classList.add("hidden");
+    document.getElementById("map-section").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
