@@ -73,10 +73,11 @@
     /* KARTVYN EFTER INLOGGNING */
 .map-wrapper {
     position: relative;
-    width: 100vw;          /* full bredd */
-    height: 100vh;         /* full höjd */
-    margin: 0;             /* ingen centreringsmarginal */
-    border-radius: 16px;   /* valfritt */
+    width: 100%;             /* fyller hela sin container */
+    max-width: 1500px;       /* valfri maxbredd på kartan */
+    height: 80vh;            /* höjd på kartan, kan justeras */
+    margin: 0 auto;          /* centrerar rutan */
+    border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     background-image: url("boras.png");
@@ -239,6 +240,7 @@ function backToMap() {
 </body>
 
 </html>
+
 
 
 
